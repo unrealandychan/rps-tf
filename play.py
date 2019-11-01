@@ -36,6 +36,7 @@ from rpscv import utils
 from rpscv import imgproc as imp
 
 import pickle
+from keras.models import load_model
 
 def saveImage(img, gesture, notify=False):
 
@@ -52,10 +53,8 @@ def saveImage(img, gesture, notify=False):
 
 try:
     # Load classifier from pickle file
-    filename = 'clf.pkl'
-    with open(filename, 'rb') as f:
-        clf = pickle.load(f)
-
+    filename = 'rps.h5'
+    model = load_model(filename)
     # Create camera object with pre-defined settings
     cam = utils.cameraSetup()
 
@@ -105,7 +104,7 @@ try:
         if nonZero > 9000:
 
             # Predict gesture
-            predGesture = clf.predict([gray])[0]
+            predGesture = model.predict(imgRGB)[0]
 
             if predGesture == lastGesture:
                 successive += 1
