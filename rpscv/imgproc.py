@@ -42,13 +42,13 @@ import cv2
 
 def crop(img):
     """Returns a cropped image to pre-defined shape."""
-    return img[75:275, 125:425]
+    return img[75:275, 125:325]
 
 def fastRotate(img):
     """Rotates the image clockwise 90 deg."""
     return np.transpose(img, axes=(1, 0, 2))[:,::-1,:].copy()
 
-def generateGrayFeatures(imshape=(200,300, 3), nbImg=0, verbose=False, rs=42):
+def generateGrayFeatures(imshape=(200,200, 3), nbImg=0, verbose=False, rs=42):
     """Reads training image files, generates features from grayscale image and
     saves the features and labels in a csv file to be used to train the image
     classifier."""
