@@ -19,7 +19,7 @@ training_set = train_datagen.flow_from_directory('../train_img',
 classifier = Sequential()
 
 # Step 1 - Convolution
-classifier.add(Conv2D(256, (3, 3), input_shape = (200, 200, 3), activation = 'relu'))
+classifier.add(Conv2D(64, (3, 3), input_shape = (200, 200, 3), activation = 'relu'))
 
 # Step 2 - Pooling
 classifier.add(MaxPooling2D(pool_size = (2, 2)))
@@ -30,7 +30,6 @@ classifier.add(Flatten())
 
 
 # Step 4 - Full connection
-classifier.add(Dense(units = 64, activation = 'relu'))
 classifier.add(Dense(units = 32, activation = 'relu'))
 classifier.add(Dense(units = 16, activation = 'relu'))
 
@@ -43,6 +42,7 @@ classifier.fit_generator(training_set,
                          steps_per_epoch = 80,
                          epochs = 5  ,
                          validation_steps = 20,
+                         workers=4
                          )
 
 classifier.save("rps.h5")
