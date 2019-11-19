@@ -86,7 +86,7 @@ try:
 
         # Convert image to RGB (from BGR)
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-
+        resizeimg = np.array(imgRGB).reshape((-1,200,200,3))
         # Get grayscale image
         gray = imp.getGray(imgRGB, threshold=17)
 
@@ -104,7 +104,7 @@ try:
         if nonZero > 9000:
 
             # Predict gesture
-            predGesture = model.predict(imgRGB)[0]
+            predGesture = model.predict(resizeimg)[0]
 
             if predGesture == lastGesture:
                 successive += 1
@@ -176,6 +176,5 @@ try:
                 print('Game over, player wins!!!')
 
 finally:
-    f.close()
     cv2.destroyAllWindows()
     cam.close()
