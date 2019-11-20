@@ -10,7 +10,7 @@ train_datagen = ImageDataGenerator(rescale = 1./255,
                                    zoom_range = 0.2,
                                    horizontal_flip = True)
 
-training_set = train_datagen.flow_from_directory('尸大./train_img',
+training_set = train_datagen.flow_from_directory('./train_img',
                                                  target_size = (200, 200),
                                                  batch_size = 32,
                                                  class_mode = 'categorical')

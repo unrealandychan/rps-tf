@@ -41,6 +41,8 @@ from rpscv import utils
 from rpscv import imgproc as imp
 from rpscv.gui import RPSGUI
 
+from keras.models import load_model
+
 def saveImage(img, gesture, notify=False):
 
     # Define image path and filename
@@ -79,9 +81,8 @@ if __name__ == '__main__':
                     print('{} is not a recognized argument'.format(arg))
 
         # Load classifier from pickle file
-        filename = 'clf.pkl'
-        with open(filename, 'rb') as f:
-            clf = pickle.load(f)
+        filename = 'rps.h5'
+        model = load_model(filename)
 
         # Create camera object with pre-defined settings
         cam = utils.cameraSetup()
@@ -116,6 +117,7 @@ if __name__ == '__main__':
 
             # Convert image to RGB (from BGR)
             imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            resizeimg = np.array(imgRGB).reshape((-1, 200, 200, 3))
 
             # Set player image to imgRGB
             gui.setPlImg(imgRGB)
@@ -137,7 +139,7 @@ if __name__ == '__main__':
             if nonZero > 9000:
 
                 # Predict gesture
-                predGesture = clf.predict([gray])[0]
+                predGesture = model.predict(resizeimg)[0]
 
                 if predGesture == lastGesture:
                     successive += 1
@@ -207,5 +209,5 @@ if __name__ == '__main__':
 
 
     finally:
-        f.close()
+
         cam.close()
