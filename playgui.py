@@ -139,7 +139,8 @@ if __name__ == '__main__':
             if nonZero > 9000:
 
                 # Predict gesture
-                predGesture = model.predict(resizeimg)[0]
+                predGesture = model.predict_classes(resizeimg)[0]
+                print(predGesture)
 
                 if predGesture == lastGesture:
                     successive += 1
