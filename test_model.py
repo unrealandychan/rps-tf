@@ -22,6 +22,7 @@ result = {
 while True:
     img = cam.getOpenCVImage()
     img = imp.crop(img)
+    cv2.imshow('Camera', img)
 
     imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     resizeimg = np.array(imgRGB).reshape((-1, 200, 200, 3))
@@ -29,6 +30,3 @@ while True:
     predGesture = model.predict_classes(resizeimg)[0]
 
     print(result[predGesture])
-    imgFR = imp.fastRotate(img)
-    cv2.imshow('Camera', imgFR)
-    time.sleep(1)

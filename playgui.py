@@ -135,8 +135,9 @@ if __name__ == '__main__':
             gesture = None
             notify = False
 
+            key = cv2.waitKey(waitTime)
             # Check if player hand is present
-            if nonZero > 9000:
+            if key in [97,99]:
 
                 # Predict gesture
                 predGesture = model.predict_classes(resizeimg)[0]
