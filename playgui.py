@@ -129,7 +129,7 @@ if __name__ == '__main__':
             nonZero = np.count_nonzero(gray)
 
             # Define waiting time
-            waitTime = 0
+            waitTime = 1
 
             # Parameters for saving new images
             gesture = None
@@ -143,41 +143,36 @@ if __name__ == '__main__':
                 predGesture = model.predict_classes(resizeimg)[0]
                 print(predGesture)
 
-                if predGesture == lastGesture:
-                    successive += 1
+
+
+
+                print('Player: {}'.format(utils.gestureTxt[predGesture]))
+                waitTime = 3000
+                gesture = predGesture
+
+                # Computer gesture
+                computerGesture = random.randint(0,2)
+                print('Computer: {}'.format(utils.gestureTxt[computerGesture]))
+
+                # Set computer image to computer gesture
+                gui.setCoImg(coImgs[computerGesture])
+
+                diff = computerGesture - predGesture
+                if diff in [-2, 1]:
+                    print('Computer wins!')
+                    gui.setWinner('computer')
+                elif diff in [-1, 2]:
+                    print('Player wins!')
+                    gui.setWinner('player')
                 else:
-                    successive = 0
+                    print('Tie')
+                    gui.setWinner('tie')
+                print('Score: player {}, computer {}\n'.format(gui.plScore,
+                                                             gui.coScore))
 
-                if successive == 2:
-                    print('Player: {}'.format(utils.gestureTxt[predGesture]))
-                    waitTime = 3000
-                    gesture = predGesture
-
-                    # Computer gesture
-                    computerGesture = random.randint(0,2)
-                    print('Computer: {}'.format(utils.gestureTxt[computerGesture]))
-
-                    # Set computer image to computer gesture
-                    gui.setCoImg(coImgs[computerGesture])
-
-                    diff = computerGesture - predGesture
-                    if diff in [-2, 1]:
-                        print('Computer wins!')
-                        gui.setWinner('computer')
-                    elif diff in [-1, 2]:
-                        print('Player wins!')
-                        gui.setWinner('player')
-                    else:
-                        print('Tie')
-                        gui.setWinner('tie')
-                    print('Score: player {}, computer {}\n'.format(gui.plScore,
-                                                                 gui.coScore))
-
-                lastGesture = predGesture
 
             else:
 
-                lastGesture = -1
 
                 # Set computer image to green
                 gui.setCoImg(greenImg)
