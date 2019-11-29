@@ -91,7 +91,7 @@ if __name__ == '__main__':
         lastGesture = -1
 
         # Define score at which game ends
-        endScore = 5
+        endScore = 15
 
         # Initialize GUI
         gui = RPSGUI(privacy=privacy, loop=loop)
@@ -143,11 +143,8 @@ if __name__ == '__main__':
                 predGesture = model.predict_classes(resizeimg)[0]
                 print(predGesture)
 
-
-
-
                 print('Player: {}'.format(utils.gestureTxt[predGesture]))
-                waitTime = 3000
+
                 gesture = predGesture
 
                 # Computer gesture
@@ -183,9 +180,6 @@ if __name__ == '__main__':
 
             # Flip pygame display
             pg.display.flip()
-
-            # Wait
-            pg.time.wait(waitTime)
 
             if gesture is not None:
                 # Save new image
